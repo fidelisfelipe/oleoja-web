@@ -1,0 +1,42 @@
+<template name="navigation">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+
+            <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
+
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Example user</strong>
+                             </span> <span class="text-muted text-xs block">user <b class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="#">Item</a></li>
+                            <li><a href="#">Item</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Item</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li class="{{isActiveRoute regex='users'}}">
+                    <a href="{{pathFor route='users'}}"><i class="fa fa-user"></i> <span class="nav-label">Users</span> </a>
+                </li> 
+                <li class="{{isActiveRoute regex='drivers'}}">
+                    <a href="{{pathFor route='drivers'}}"><i class="fa fa-motorcycle"></i> <span class="nav-label">Drivers</span> </a>
+                </li> 
+                <li class="{{isActiveRoute regex='requests'}}">
+                    <a href="{{pathFor route='requests'}}"><i class="fa fa-map-pin"></i> <span class="nav-label">Requests</span> </a>
+                </li> 
+                <li class="{{isActiveRoute regex='brands'}}">
+                    <a href="{{pathFor route='brands'}}"><i class="fa fa-car"></i> <span class="nav-label">Brands</span> </a>
+                </li>
+                <li class="{{isActiveRoute regex='models'}}">
+                    <a href="{{pathFor route='models'}}"><i class="fa fa-car"></i> <span class="nav-label">Models</span> </a>
+                </li> 
+            </ul>
+        </div>
+    </nav>
+</template>

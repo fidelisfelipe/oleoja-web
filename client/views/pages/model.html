@@ -1,0 +1,90 @@
+<template name="Model">
+
+ 	{{> pageHeading title='Modelos' }}
+
+ 	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+
+				<div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Modelos <small>Controle de modelos de carros</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                    	<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="name">Fabricante</label>
+								<div class="col-lg-10">
+									<select type="text" class="form-control name" id="brand" required>
+										<option value="">Selecione um fabricante</option>
+										{{#each brands}}
+									        <option value="{{_id}}">{{name}}</option>
+									    {{/each}}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="name">Nome</label>
+								<div class="col-lg-10">
+									<input type="hidden" name="id" id="id">
+									<input type="text" class="form-control name" placeholder="Nome do modelo" id="name" required>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary save">Salvar</button>
+						</form>
+                    </div>
+                </div>
+
+				<div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Modelos <small>Listagem de modelos de carros</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+		                <table class="table table-hover">
+		                    <thead>
+		                        <tr>
+		                            <th>Fabricante</th>
+		                            <th>Modelo</th>
+		                            <th></th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>		                    	
+		                        {{#each brand in brands}}
+		                        	{{#each model in brand.models}}
+									<tr>
+										<td align="left">{{brand.name}}</td>
+								        <td align="left">{{model.name}}</td>
+								        <td align="right">
+											<div class="btn-group btn-actions">
+				                                <a class="btn btn-sm btn-white edit" data-toggle="tooltip" title="Editar" href="#">
+				                                	<i class="glyphicon glyphicon-edit"></i>
+				                                </a>
+												<a class="btn btn-sm btn-white remove" data-toggle="tooltip" title="Remover" href="#">
+				                                	<i class="glyphicon glyphicon-trash"></i>
+				                                </a>
+				                            </div>
+								        </td>
+								    </tr>
+			                        {{/each}}
+			                    {{/each}}
+		                    </tbody>
+		                </table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</template>

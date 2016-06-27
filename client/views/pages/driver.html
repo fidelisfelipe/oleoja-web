@@ -1,0 +1,92 @@
+<template name="Driver">
+
+ 	{{> pageHeading title='Drivers' }}
+
+ 	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+
+				<div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Driver <small>Cadastro de motoristas</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                    	<form class="form-horizontal">
+                    		<input type="hidden" name="_id" id="_id">
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="name">Name</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control name" placeholder="Complete name" id="name" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="email">Email</label>
+								<div class="col-lg-10">
+									<input type="email" class="form-control email" id="email" placeholder="Email Address" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="latitude">Latitude</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control latitude" placeholder="Latitude" id="latitude" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label" for="longitude">Longitude</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control longitude" placeholder="Longitude" id="longitude" required>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary save">Salvar</button>
+						</form>
+                    </div>
+                </div>
+
+				<div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Drivers <small>Listagem de motoristas</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+		                <table class="table table-hover dataTable ">
+		                    <thead>
+		                        <tr>
+		                            <th><center>Name</center></th>
+		                            <th><center>Email</center></th>
+		                            <th><center>Latitude</center></th>
+		                            <th><center>Longitude</center></th>
+		                            <th>Ações</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        {{#each drivers}}
+								<tr align="center">
+							        <td>{{name}}</td>
+							        <td>{{email}}</td>
+							        <td>{{latitude}}</td>
+							        <td>{{longitude}}</td>
+							        <td align="center">
+							            <a href="#"><span class="glyphicon glyphicon-trash remove"></span></a>
+							        </td>
+							    </tr>
+		                        {{/each}}
+		                    </tbody>
+		                </table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</template>
