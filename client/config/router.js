@@ -4,11 +4,11 @@ Router.configure({
 
 });
 
-Router.route('/drivers', function () {
-    this.render('Driver');
+Router.route('/users', function () {
+    this.render('User');
 });
 
-Router.route('/users', function () {
+Router.route('/drivers', function () {
     this.render('Driver');
 });
 
