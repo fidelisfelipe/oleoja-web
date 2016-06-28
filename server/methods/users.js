@@ -1,24 +1,12 @@
 Meteor.methods({
 	saveUser: function(data) {
-		check(data.user, {
-			'name': String,
-			'email': String,
-			'password': String
-		});
-
-		check(data.vehicle, {
-			'brand': String,
-			'model': String,
-			'year': String,
-			'fuel': String
-		});
-
 		var user = Accounts.createUser({
-			'name': data.user.name,
 			'email': data.user.email,
 			'password': data.user.password,
 			'profile': 
 			{
+				'name': data.user.name,
+				'phone': data.user.phone,
 				'createdAt': Date.now(),
 				'vehicles': 
 				[
@@ -41,5 +29,9 @@ Meteor.methods({
 		Meteor.users.remove(user._id);
 		
 		return id;
+	},
+
+	getUser: function(id) {
+		return Meteor.users.findOne({_id: id});
 	}
 });

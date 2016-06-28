@@ -8,21 +8,24 @@ Meteor.methods({
 		});
 
 		if (driver.id) {
-			driver.updatedAt = Date.now();
-
 			Drivers.update(driver.id, {
 				$set: {
 					'name': driver.name,
 					'email': driver.email,
 					'latitude': driver.latitude,
-					'longitude': driver.longitude
+					'longitude': driver.longitude,
+					'updatedAt': Date.now()
 				}
 			});
 			var id = driver.id
 		} else {
-			driver.createdAt = Date.now();
-
-			var id = Drivers.insert(id, driver);
+			var id = Drivers.insert({
+				'name': driver.name,
+				'email': driver.email,
+				'latitude': driver.latitude,
+				'longitude': driver.longitude,
+				'createdAt': Date.now()
+			});
 		}
 
 		return id;
