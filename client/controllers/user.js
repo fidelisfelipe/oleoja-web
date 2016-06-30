@@ -14,6 +14,9 @@ Controller('User', {
   },
 
   helpers: {
+  	users: function() {
+		return Meteor.users.find({})
+	},
     fuels: function() {
     	return [{name: 'Flex'}, {name: 'Gasolina'}, {name: 'Alcool'}, {name: 'Diesel'}, {name: 'GNV'}];
     },
@@ -65,6 +68,7 @@ Controller('User', {
 	},
 
 	'click .remove': function(e, tmpl) {
+		console.log(this._id);
 		Meteor.call('removeUser', this._id, function(error){
 			if (error) {
 				return throwError(error.reason);

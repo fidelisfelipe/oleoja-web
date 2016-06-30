@@ -106,20 +106,27 @@
 		                        <tr>
 		                            <th><center>Name</center></th>
 		                            <th><center>Email</center></th>
-		                            <th><center>Latitude</center></th>
-		                            <th><center>Longitude</center></th>
-		                            <th>Ações</th>
+		                            <th><center>Phone</center></th>
+		                            <th><center>Vehicle</center></th>
+		                            <th></th>
 		                        </tr>
 		                    </thead>
 		                    <tbody>
-		                        {{#each drivers}}
+		                        {{#each users}}
 								<tr align="center">
-							        <td>{{name}}</td>
-							        <td>{{email}}</td>
-							        <td>{{latitude}}</td>
-							        <td>{{longitude}}</td>
+							        <td>{{profile.name}}</td>
+							        <td>{{emails.[0].address}}</td>
+							        <td>{{profile.phone}}</td>
+							        <td>{{profile.vehicles.[0].brand}} {{profile.vehicles.[0].model}} ({{profile.vehicles.[0].year}})</td>
 							        <td align="center">
-							            <a href="#"><span class="glyphicon glyphicon-trash remove"></span></a>
+							            <div class="btn-group btn-actions">
+			                                <a class="btn btn-sm btn-white edit" data-toggle="tooltip" title="Editar" href="#">
+			                                	<i class="glyphicon glyphicon-edit"></i>
+			                                </a>
+											<a class="btn btn-sm btn-white remove" data-toggle="tooltip" title="Remover" href="#">
+			                                	<i class="glyphicon glyphicon-trash"></i>
+			                                </a>
+			                            </div>
 							        </td>
 							    </tr>
 		                        {{/each}}

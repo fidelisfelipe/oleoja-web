@@ -20,6 +20,9 @@ Router.route('/models', function () {
     this.render('Model');
 });
 
-Router.route('/', function () {
-	this.render('Driver');
+Router.route('/', {
+	layoutTemplate: 'blankLayout',
+	action: function() {
+		this.render('Index');
+	}
 });

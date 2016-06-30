@@ -24,11 +24,11 @@ Meteor.methods({
 	},
 
 	removeUser: function(id) {
-		var user = Accounts.find({_id: id});
+		check(id, String);
 
-		Meteor.users.remove(user._id);
-		
-		return id;
+		Meteor.users.remove({
+			_id: id
+		});
 	},
 
 	getUser: function(id) {
