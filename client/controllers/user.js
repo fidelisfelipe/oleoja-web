@@ -1,4 +1,5 @@
 Session.setDefault('editing', false);
+
 Controller('User', {
   rendered: function() {
     $('.form').validate();
@@ -7,6 +8,7 @@ Controller('User', {
   created: function() {
   	var self = this;
   	self.user = new ReactiveVar({});
+  	self.payments = new ReactiveVar({});
   	self.models = new ReactiveVar([]);
 	self.autorun(function() {
 		self.subscribe('users');
@@ -15,9 +17,6 @@ Controller('User', {
   },
 
   helpers: {
-  	user: function() {
-		return self.user.get();
-	},
   	users: function() {
 		return Meteor.users.find({});
 	},
@@ -25,11 +24,16 @@ Controller('User', {
     	return [{name: 'Flex'}, {name: 'Gasolina'}, {name: 'Alcool'}, {name: 'Diesel'}, {name: 'GNV'}];
     },
 	brands: function() {
-		self.brands = Brands.find({});
-		return self.brands;
+		return Brands.find({});
 	},
 	models: function() {
 		return Template.instance().models.get();
+	},
+  	user: function() {
+		return Template.instance().user.get();
+	},
+	payments: function() {
+		return Template.instence().payments.get();
 	},
 	editing: function() {
 		return Session.get('editing');
@@ -94,18 +98,18 @@ Controller('User', {
 		var credit_card = tmpl.find('#credit_card').value;
 		var expiration = tmpl.find('#expiration').value;
 		var cvv = tmpl.find('#cvv').value;
-
+		var user = tmpl.user.get();
+		
 		var data = {
 			'name': name,
-			'credit_card': credit_card,
+			'number': credit_card,
 			'expiration': expiration,
 			'cvv': cvv,
-			'user': tmpl.user.get()
+			'user': user._id
 		};
 
 		Meteor.call('savePayment', data, function(error) {
 			if(error) {
-				console.log(error)
 				return throwError(error.reason);
 			}
 		});
@@ -120,7 +124,17 @@ Controller('User', {
 	},
 
 	'click .changed': function(e, tmpl) {
-		tmpl.user.set(Meteor.users.findOne({_id: this._id}));
+		var user = Meteor.users.findOne({_id: this._id});
+		
+		Meteor.subscribe('userPayments', user.services.iugu)
+		
+		var payments = Payments.find({}).fetch();
+		
+		tmpl.user.set(user);
+		tmpl.payments.set(payments);
+		
+		console.log('payments')
+		console.log(payments)
 	}
   }
 });

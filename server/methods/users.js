@@ -1,6 +1,6 @@
 Meteor.methods({
 	saveUser: function(data) {
-		var user = Accounts.createUser({
+		var id = Accounts.createUser({
 			'email': data.user.email,
 			'password': data.user.password,
 			'profile': 
@@ -19,41 +19,65 @@ Meteor.methods({
 				]
 			}
 		});
+		
+		var iugu = IugiApi.create_customer({
+			'email': data.user.email,
+		    'name': data.user.name,
+		    'cpf_cnpj': '',
+		    'cc_emails': '',
+			'notes': 'Rider'
+		});
 
-		return user;
+		if (iugu.id) {
+			Meteor.users.update(id, {
+				$set: {
+					'services.iugu': iugu.id,
+					'updatedAt': Date.now()
+				}					
+			});
+		}
+		
+		return Meteor.users.findOne({_id: id});
 	},
 
 	savePayment: function(data) {
-		console.log(data)
-		console.log(data.user.emails[0])
-		if (!data.user.profile.tokens || !data.user.profile.tokens.iugu) {
-			var customer = {
-				'email': 'teste@teste.com', //data.user.emails[0].address,
-			    'name': data.user.profile.name,
+		var user = Meteor.users.findOne({_id: data.user});
+		
+		if (!user.services.iugu) {
+			var iugu = IugiApi.create_customer({
+				'email': user.emails[0].address,
+			    'name': user.profile.name,
 			    'cpf_cnpj': '',
 			    'cc_emails': '',
 			    'notes': 'Rider'
-			}
-
-			var result = IugiApi.create_customer(customer);
-			
-			console.log(result);
-
-			Meteor.users.update(data.user._id, {
-				$set: {
-					'profile': {
-						'tokens': {
-							'iugu': result.id
-						},
-						'updatedAt': Date.now()
-					}					
-				}
 			});
-
-			console.log(result);
+			
+			if (iugu.id) {
+				Meteor.users.update(user._id, {
+					$set: {
+						'services.iugu': iugu.id,
+						'updatedAt': Date.now()
+					}
+				});
+				user.tokens.iugu = iugu.id;
+			}
 		}
-
-		console.log(data)
+		
+		var card = IugiApi.create_payment_method({
+			customer_id: user.tokens.iugu,
+			description: "Credit card",
+			data: {
+				number: data.number,
+				verification_value: data.cvv,
+				first_name: data.name,
+				last_name: data.name,
+				month: data.expiration,
+				year: data.expiration
+			},
+		    item_type: 'credit_card'
+		});
+		
+		console.log(card);
 	},
 
 	removeUser: function(id) {
