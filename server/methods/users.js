@@ -23,6 +23,39 @@ Meteor.methods({
 		return user;
 	},
 
+	savePayment: function(data) {
+		console.log(data)
+		console.log(data.user.emails[0])
+		if (!data.user.profile.tokens || !data.user.profile.tokens.iugu) {
+			var customer = {
+				'email': 'teste@teste.com', //data.user.emails[0].address,
+			    'name': data.user.profile.name,
+			    'cpf_cnpj': '',
+			    'cc_emails': '',
+			    'notes': 'Rider'
+			}
+
+			var result = IugiApi.create_customer(customer);
+			
+			console.log(result);
+
+			Meteor.users.update(data.user._id, {
+				$set: {
+					'profile': {
+						'tokens': {
+							'iugu': result.id
+						},
+						'updatedAt': Date.now()
+					}					
+				}
+			});
+
+			console.log(result);
+		}
+
+		console.log(data)
+	},
+
 	removeUser: function(id) {
 		check(id, String);
 

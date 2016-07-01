@@ -1,3 +1,3 @@
 Meteor.startup(function() {
-  IugiApi = new Iugu.API('c73d49f9-6490-46ee-ba36-dcf69f6334fd');
+  IugiApi = new Iugu.API('6468ca8d08128832f3db5944c734d214');
 });

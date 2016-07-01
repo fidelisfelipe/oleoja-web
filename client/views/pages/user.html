@@ -2,6 +2,56 @@
 
  	{{> pageHeading title='Users' }}
 
+	<div class="modal inmodal" id="credit-card" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Cartão de Credito</h4>
+                    <small class="font-bold">Formas de pagamento do usuário.</small>
+                </div>
+                <div class="modal-body">
+					<form class="form">
+			            <div class="form-group">
+			                <div class="input-group m-b">
+			                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+		                        <input id="card_name" placeholder="Titular do cartão" class="form-control" data-iugu="full_name" type="text" value="" />
+			                </div>
+			                <div class="input-group m-b">
+			                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+		                        <input id="credit_card" placeholder="Número do cartão" autocomplete="off" class="form-control" data-iugu="number" data-inputmask="'mask': '9999-9999-9999-9999', 'autoUnmask': true, 'showMaskOnHover': false" type="text" value="" />
+			                </div>
+			                <div class="input-group m-b">
+			                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+			                    <input id="expiration" placeholder="MM/AA" autocomplete="off" class="form-control" data-iugu="expiration"  data-inputmask="'mask': '99/99', 'autoUnmask': true, 'showMaskOnHover': false" type="text" value="" />
+			                </div>
+							<div class="input-group m-b">
+			                    <span class="input-group-addon"><i class="fa fa-credit-card-alt"></i></span>
+								<input id="cvv" placeholder="CVV" autocomplete="off" class="form-control" data-iugu="verification_value" data-inputmask="'mask': '999', 'autoUnmask': true, 'showMaskOnHover': false" maxlengh="3" type="text" value="" />
+			                </div>
+			            </div>
+			            <div class="form-group">
+			            	<div class="row">
+			            		<div class="col-sm-4 pull-left">
+			                		<a class="btn btn-primary payment" href=""><i class="fa fa-money"></i> Adicionar</a>
+			                	</div>
+			                	<div class="col-sm-8 text-right pull-right">
+			                		<img src="http://storage.pupui.com.br/9CA0F40E971643D1B7C8DE46BBC18396/assets/cc-icons.e8f4c6b4db3cc0869fa93ad535acbfe7.png" alt="Visa, Master, Diners. Amex" border="0" />
+			                	</div>
+			                </div>
+			            </div>
+					</form>
+                    <p>
+                    	<strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
  	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="col-lg-12">
@@ -118,11 +168,14 @@
 							        <td>{{emails.[0].address}}</td>
 							        <td>{{profile.phone}}</td>
 							        <td>{{profile.vehicles.[0].brand}} {{profile.vehicles.[0].model}} ({{profile.vehicles.[0].year}})</td>
-							        <td align="center">
-							            <div class="btn-group btn-actions">
+							        <td align="right">
+							            <div class="btn-group btn-actions pull-right">
 			                                <a class="btn btn-sm btn-white edit" data-toggle="tooltip" title="Editar" href="#">
 			                                	<i class="glyphicon glyphicon-edit"></i>
 			                                </a>
+											<button type="button" class="btn btn-sm btn-white changed" data-toggle="modal" data-target="#credit-card" title="Cartão de Credito">
+			                                	<i class="glyphicon glyphicon-credit-card"></i>
+			                                </button>
 											<a class="btn btn-sm btn-white remove" data-toggle="tooltip" title="Remover" href="#">
 			                                	<i class="glyphicon glyphicon-trash"></i>
 			                                </a>
@@ -134,7 +187,6 @@
 		                </table>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
