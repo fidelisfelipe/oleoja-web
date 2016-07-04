@@ -41,9 +41,46 @@
 			                </div>
 			            </div>
 					</form>
-                    <p>
-                    	<strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    </p>
+                    <div class="row">
+                    	<div class="col-xs-12">
+                    		{{#if payments.length}}
+	                    	<table class="table table-hover dataTable ">
+			                    <thead>
+			                        <tr>
+			                            <th><center>Name</center></th>
+			                            <th><center>Email</center></th>
+			                            <th><center>Phone</center></th>
+			                            <th><center>Vehicle</center></th>
+			                            <th></th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        {{#each payments}}
+									<tr align="center">
+								        <td>{{data.holder_name}}</td>
+								        <td>{{data.display_number}}</td>
+								        <td>{{data.brand}}</td>
+								        <td align="right">
+								            <div class="btn-group btn-actions pull-right">
+				                                <a class="btn btn-sm btn-white edit" data-toggle="tooltip" title="Editar" href="#">
+				                                	<i class="glyphicon glyphicon-edit"></i>
+				                                </a>
+												<a class="btn btn-sm btn-white remove" data-toggle="tooltip" title="Remover" href="#">
+				                                	<i class="glyphicon glyphicon-trash"></i>
+				                                </a>
+				                            </div>
+								        </td>
+								    </tr>
+			                        {{/each}}
+			                    </tbody>
+			                </table>
+			                {{else}}
+				                <div class="alert alert-warning">
+	                                <i class="fa fa-bell-o"></i> Nenhuma forma de pagamento atribuida a este cliente.
+	                            </div>
+			                {{/if}}
+                    	</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>

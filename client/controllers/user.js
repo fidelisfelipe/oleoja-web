@@ -6,14 +6,17 @@ Controller('User', {
   },
 
   created: function() {
-  	var self = this;
-  	self.user = new ReactiveVar({});
-  	self.payments = new ReactiveVar({});
-  	self.models = new ReactiveVar([]);
+ 	var self = this;
+
 	self.autorun(function() {
 		self.subscribe('users');
 		self.subscribe('brands');
 	})
+
+  	self.user = new ReactiveVar({});
+  	self.payments = new ReactiveVar({});
+  	self.models = new ReactiveVar([]);
+  	self.brands = Brands.find({});
   },
 
   helpers: {
@@ -24,7 +27,7 @@ Controller('User', {
     	return [{name: 'Flex'}, {name: 'Gasolina'}, {name: 'Alcool'}, {name: 'Diesel'}, {name: 'GNV'}];
     },
 	brands: function() {
-		return Brands.find({});
+		return Template.instance().brands;
 	},
 	models: function() {
 		return Template.instance().models.get();
@@ -33,7 +36,7 @@ Controller('User', {
 		return Template.instance().user.get();
 	},
 	payments: function() {
-		return Template.instence().payments.get();
+		return Template.instance().payments.get();
 	},
 	editing: function() {
 		return Session.get('editing');
@@ -42,7 +45,7 @@ Controller('User', {
 
   events: {
     'change .brand': function(e, tmpl) {
-    	var brands = self.brands.fetch();
+    	var brands = tmpl.brands.fetch();
     	for (var i in brands) {
     		if (brands[i].name == tmpl.find('#brand').value) {
     			tmpl.models.set(brands[i].models)
@@ -100,7 +103,7 @@ Controller('User', {
 		var cvv = tmpl.find('#cvv').value;
 		var user = tmpl.user.get();
 		
-		var data = {
+		var card = {
 			'name': name,
 			'number': credit_card,
 			'expiration': expiration,
@@ -108,15 +111,18 @@ Controller('User', {
 			'user': user._id
 		};
 
-		Meteor.call('savePayment', data, function(error) {
-			if(error) {
-				return throwError(error.reason);
+		Meteor.call('savePayment', card, function(error, response) {
+			console.log(response);
+			console.log(error);
+			if (error) {
+				//swal("Oops...", "Something went wrong!", "error");
+				//return throwError(error.reason);
 			}
 		});
 	},
 
 	'click .remove': function(e, tmpl) {
-		Meteor.call('removeUser', this._id, function(error){
+		Meteor.call('removeUser', this._id, function(error, response){
 			if (error) {
 				return throwError(error.reason);
 			}
@@ -126,15 +132,11 @@ Controller('User', {
 	'click .changed': function(e, tmpl) {
 		var user = Meteor.users.findOne({_id: this._id});
 		
-		Meteor.subscribe('userPayments', user.services.iugu)
-		
-		var payments = Payments.find({}).fetch();
+		Meteor.call('listPayments', user.services.iugu, function(error, response) {
+			tmpl.payments.set(response);
+		})
 		
 		tmpl.user.set(user);
-		tmpl.payments.set(payments);
-		
-		console.log('payments')
-		console.log(payments)
 	}
   }
 });
