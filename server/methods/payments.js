@@ -1,6 +1,5 @@
 Meteor.methods({
 	listPayments: function(customer) {
-		return IugiApi.customers();
 		return IugiApi.payment_methods(customer);
 	},
 
@@ -28,18 +27,24 @@ Meteor.methods({
 			}
 		}
 		
-		return IugiApi.create_payment_method({
-			customer_id: user.services.iugu,
-			description: "Credit Card",
-			data: {
+		try {
+			var card = {
 				number: data.number,
 				verification_value: data.cvv,
-				first_name: data.name,
-				last_name: data.name,
-				month: data.expiration,
-				year: data.expiration
-			},
-		    item_type: 'credit_card'
-		});
+				first_name: data.name.split(' ')[0],
+				last_name: data.name.split(' ').splice(-1).join(' '),
+				month: data.expiration.split('/')[0],
+				year: data.expiration.split('/')[1]
+			};
+			
+			return IugiApi.create_payment_method({
+				customer_id: user.services.iugu,
+				description: "Credit Card",
+				data: card,
+			    item_type: 'credit_card'
+			});
+		} catch (error) {
+			return extractJSON(error.toString())
+		}
 	}
 });

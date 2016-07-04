@@ -112,11 +112,8 @@ Controller('User', {
 		};
 
 		Meteor.call('savePayment', card, function(error, response) {
-			console.log(response);
-			console.log(error);
-			if (error) {
-				//swal("Oops...", "Something went wrong!", "error");
-				//return throwError(error.reason);
+			if (response.errors) {
+				swal("Oops...", response.errors.data.join(''), "error");
 			}
 		});
 	},
